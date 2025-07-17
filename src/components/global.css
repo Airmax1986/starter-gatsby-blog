@@ -139,63 +139,39 @@ ul li p {
   margin-bottom: 0.5rem;
 }
 
-.article-container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1rem 2rem;
-  background: var(--background, #fff);
-  border-radius: var(--radius-sm, 8px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+/* Blogpost Styling */
+article {
+  max-width: 800px;       /* Breite vom Textbereich, damit es nicht so breit wird */
+  margin: 3rem auto;      /* Abstand oben/unten und zentriert */
+  padding: 0 1.5rem;      /* Innenabstand links und rechts */
+  font-family: Arial, sans-serif; /* Schriftart */
+  color: #222;            /* Textfarbe */
+  line-height: 1.6;       /* Zeilenhöhe für besseren Lesefluss */
 }
 
-.article-header {
-  margin-bottom: 2rem;
+article h1 {
+  font-weight: 700;       /* Fett */
+  font-size: 2.5rem;      /* Größe der Überschrift */
+  margin-bottom: 0.5rem;  /* Abstand unter der Überschrift */
+  color: #007acc;         /* schöne blaue Farbe */
 }
 
-.article-header h1 {
-  font-weight: var(--bold, 700);
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-  color: var(--primary, #007acc);
+article p em {
+  color: #666;            /* Datum und Autor in grauer Farbe */
 }
 
-.article-meta {
-  color: var(--black-fade-5, #777);
-  font-size: 0.9rem;
-  margin-bottom: 2rem;
+article p {
+  margin-bottom: 1.5rem;  /* Abstand unter jedem Absatz */
+  font-size: 1.125rem;    /* Größe vom normalen Text */
 }
 
-.article-image {
-  margin-bottom: 2rem;
-  border-radius: var(--radius-sm, 8px);
-  overflow: hidden;
+article img {
+  border-radius: 8px;     /* Ecken von Bildern schön abgerundet */
 }
 
 .article-content {
-  line-height: 1.7;
-  font-size: 1.125rem;
-  color: var(--text-color, #333);
+  margin-top: 2rem;       /* Abstand vor dem Haupttext */
+  font-size: 1.125rem;    /* Textgröße im Hauptteil */
 }
 
-.article-content p {
-  margin-bottom: 1.25rem;
-}
-
-.article-content h2,
-.article-content h3,
-.article-content h4 {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  font-weight: var(--semibold, 600);
-  color: var(--primary, #007acc);
-}
-
-.article-content a {
-  color: var(--primary, #007acc);
-  text-decoration: underline;
-}
-
-.article-content a:hover {
-  color: var(--primary-hover, #005fa3);
-}
 
