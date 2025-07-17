@@ -17,7 +17,7 @@ const BlogPostTemplate = ({ data }) => {
         )}
         <p>{post.summary}</p>
         <div style={{marginTop: "2rem", lineHeight: "1.6"}}>
-          <div dangerouslySetInnerHTML={{ __html: post.content.childMarkdownRemark.html }} />
+          {post.content}
         </div>
       </article>
     </Layout>
@@ -32,11 +32,7 @@ export const pageQuery = graphql`
       title
       slug
       summary
-      content {
-        childMarkdownRemark {
-          html
-        }
-      }
+      content
       date(formatString: "MMMM D, YYYY")
       headerImage {
         gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 1000)
@@ -46,3 +42,4 @@ export const pageQuery = graphql`
       }
     }
   }
+`
