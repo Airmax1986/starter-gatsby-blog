@@ -17,7 +17,7 @@ const BlogPostTemplate = ({ data }) => {
         )}
         <p>{post.summary}</p>
         <div style={{marginTop: "2rem", lineHeight: "1.6"}}>
-          {post.content}
+          <div dangerouslySetInnerHTML={{ __html: post.content.content }} />
         </div>
       </article>
     </Layout>
@@ -32,7 +32,9 @@ export const pageQuery = graphql`
       title
       slug
       summary
-      content
+      content {
+        content
+      }
       date(formatString: "MMMM D, YYYY")
       headerImage {
         gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 1000)
