@@ -22,7 +22,7 @@ const ArticlePreview = ({ posts }) => {
                 <h2 className={styles.title}>{post.title}</h2>
               </Link>
               <div>
-                {post.description?.raw && renderRichText(post.description)}
+                {post.description && <p>{post.description}</p>}
               </div>
               <div className={styles.meta}>
                 <small className="meta">{post.Date}</small>
