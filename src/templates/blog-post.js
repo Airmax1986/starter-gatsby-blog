@@ -10,7 +10,7 @@ import readingTime from 'reading-time'
 import Seo from '../components/seo'
 import Layout from '../components/layout'
 import Hero from '../components/hero'
-import Tags from '../components/tags'
+// import Tags from '../components/tags' // optional
 import * as styles from './blog-post.module.css'
 
 class BlogPostTemplate extends React.Component {
@@ -18,49 +18,49 @@ class BlogPostTemplate extends React.Component {
     const post = get(this.props, 'data.contentfulBlogPost')
     const previous = get(this.props, 'data.previous')
     const next = get(this.props, 'data.next')
-    const plainTextDescription = documentToPlainTextString(
-      JSON.parse(post.description.raw)
-    )
-    const plainTextBody = documentToPlainTextString(JSON.parse(post.body.raw))
+    const plainTextSummary = post.summary
+    const plainTextBody = post.content
+
     const { minutes: timeToRead } = readingTime(plainTextBody)
-    
+
     const options = {
       renderNode: {
         [BLOCKS.EMBEDDED_ASSET]: (node) => {
-        const { gatsbyImage, description } = node.data.target
-        return (
-           <GatsbyImage
+          const { gatsbyImage, description } = node.data.target
+          return (
+            <GatsbyImage
               image={getImage(gatsbyImage)}
               alt={description}
-           />
-         )
+            />
+          )
         },
       },
-    };
+    }
 
     return (
       <Layout location={this.props.location}>
         <Seo
           title={post.title}
-          description={plainTextDescription}
-          image={`http:${post.heroImage.resize.src}`}
+          description={plainTextSummary}
+          image={`http:${post.headerImage?.resize?.src}`}
         />
         <Hero
-          image={post.heroImage?.gatsbyImage}
+          image={post.headerImage?.gatsbyImage}
           title={post.title}
-          content={post.description}
+          content={post.summary}
         />
         <div className={styles.container}>
           <span className={styles.meta}>
             {post.author?.name} &middot;{' '}
-            <time dateTime={post.rawDate}>{post.publishDate}</time> –{' '}
+            <time dateTime={post.date}>{post.date}</time> –{' '}
             {timeToRead} minute read
           </span>
           <div className={styles.article}>
             <div className={styles.body}>
-              {post.body?.raw && renderRichText(post.body, options)}
+              {post.content && <p>{post.content}</p>}
             </div>
-            <Tags tags={post.tags} />
+            {/* Tags entfernen oder selbst einbauen */}
+            {/* <Tags tags={post.tags} /> */}
             {(previous || next) && (
               <nav>
                 <ul className={styles.articleNavigation}>
@@ -99,24 +99,17 @@ export const pageQuery = graphql`
     contentfulBlogPost(slug: { eq: $slug }) {
       slug
       title
-      author {
-        name
-      }
-      publishDate(formatString: "MMMM Do, YYYY")
-      rawDate: publishDate
-      heroImage {
+      summary
+      date(formatString: "MMMM Do, YYYY")
+      headerImage {
         gatsbyImage(layout: FULL_WIDTH, placeholder: BLURRED, width: 1280)
         resize(height: 630, width: 1200) {
           src
         }
       }
-      body {
-        raw
-        
-      }
-      tags
-      description {
-        raw
+      content
+      author {
+        name
       }
     }
     previous: contentfulBlogPost(slug: { eq: $previousPostSlug }) {
