@@ -1,40 +1,31 @@
-import React from 'react'
-import { Link } from 'gatsby'
-import { GatsbyImage } from 'gatsby-plugin-image'
-import { renderRichText } from 'gatsby-source-contentful/rich-text'
-
-import Container from './container'
-import Tags from './tags'
-import * as styles from './article-preview.module.css'
+// src/components/article-preview.js
+import React from "react"
+import { Link } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import * as styles from "./article-preview.module.css"
 
 const ArticlePreview = ({ posts }) => {
-  if (!posts) return null
-  if (!Array.isArray(posts)) return null
+  if (!posts || !Array.isArray(posts)) return null
 
   return (
-    <Container>
-      <ul className={styles.articleList}>
-        {posts.map((post) => {
-          return (
-            <li key={post.slug}>
-              <Link to={`/blog/${post.slug}`} className={styles.link}>
-                {post.heroImage?.gatsbyImage && (
-  <GatsbyImage alt="" image={post.heroImage.gatsbyImage} />
-)}
-                <h2 className={styles.title}>{post.title}</h2>
-              </Link>
-              <div>
-                {post.description && <p>{post.description}</p>}
-              </div>
-              <div className={styles.meta}>
-                <small className="meta">{post.Date}</small>
-                <Tags tags={post.tags} />
-              </div>
-            </li>
-          )
-        })}
-      </ul>
-    </Container>
+    <ul className={styles.articleList}>
+      {posts.map((post) => (
+        <li key={post.slug} className={styles.articleItem}>
+          <Link to={`/blog/${post.slug}`} className={styles.link}>
+            {post.headerImage && (
+              <GatsbyImage
+                image={getImage(post.headerImage)}
+                alt={post.title}
+                className={styles.image}
+              />
+            )}
+            <h2 className={styles.title}>{post.title}</h2>
+            <p className={styles.date}>{post.Date}</p>
+            <p className={styles.summary}>{post.summary}</p>
+          </Link>
+        </li>
+      ))}
+    </ul>
   )
 }
 
