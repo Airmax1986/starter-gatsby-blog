@@ -17,8 +17,27 @@ module.exports = {
       options: {
         spaceId: process.env.CONTENTFUL_SPACE_ID,
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-        host: process.env.CONTENTFUL_HOST
+        // Host entfernen oder explizit setzen
+        host: process.env.CONTENTFUL_HOST || "cdn.contentful.com",
+        // Environment explizit setzen
+        environment: "master",
       },
     },
+    // Markdown-Transformer für Contentful hinzufügen
+    {
+      resolve: "gatsby-transformer-remark",
+      options: {
+        plugins: [
+          {
+            resolve: "gatsby-remark-images-contentful",
+            options: {
+              maxWidth: 590,
+            },
+          },
+        ],
+      },
+    },
+    // Netlify Plugin am Ende hinzufügen
+    "gatsby-plugin-netlify",
   ],
 };
