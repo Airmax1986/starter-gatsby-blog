@@ -20,5 +20,6 @@ module.exports = {
         environment: "master",
       },
     },
+    `gatsby-transformer-remark`,
   ],
 };
