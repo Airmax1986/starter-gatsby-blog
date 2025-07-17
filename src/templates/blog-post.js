@@ -13,12 +13,10 @@ const BlogPostTemplate = ({ data }) => {
         <h1>{post.title}</h1>
         <p><em>{post.Date}</em> &nbsp;–&nbsp; von {post.author?.name}</p>
         {image && (
-          <GatsbyImage image={image} alt={post.title} style={{marginBottom: "2rem"}} />
+          <GatsbyImage image={image} alt={post.title} style={{ marginBottom: "2rem", borderRadius: "8px" }} />
         )}
         <p>{post.summary}</p>
-        <div style={{marginTop: "2rem", lineHeight: "1.6"}}>
-          <div dangerouslySetInnerHTML={{ __html: post.content.content }} />
-        </div>
+        <div className="article-content" dangerouslySetInnerHTML={{ __html: post.content.content }} />
       </article>
     </Layout>
   )
