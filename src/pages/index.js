@@ -16,7 +16,7 @@ class RootIndex extends React.Component {
         <Hero
           image={author.heroImage.gatsbyImage}
           title={author.name}
-          content={author.shortBio}
+          content={author.shortBio?.raw}
         />
         <ArticlePreview posts={posts} />
       </Layout>
@@ -28,13 +28,12 @@ export default RootIndex
 
 export const pageQuery = graphql`
   query HomeQuery {
-    allContentfulBlogPost(sort: { publishDate: DESC }) {
+    allContentfulBlogPost(sort: { fields: date, order: DESC }) {
       nodes {
         title
         slug
-        publishDate(formatString: "MMMM Do, YYYY")
-        tags
-        heroImage {
+        date(formatString: "MMMM Do, YYYY")
+        headerImage {
           gatsbyImage(
             layout: FULL_WIDTH
             placeholder: BLURRED
@@ -42,14 +41,10 @@ export const pageQuery = graphql`
             height: 212
           )
         }
-        description {
-          raw
-        }
+        summary
       }
     }
-    allContentfulPerson(
-      filter: { contentful_id: { eq: "15jwOBqpxqSAOy2eOO4S0m" } }
-    ) {
+    allContentfulPerson {
       nodes {
         name
         shortBio {
