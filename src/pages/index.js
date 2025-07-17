@@ -1,7 +1,8 @@
+// index.js
 import * as React from "react"
 import { graphql } from "gatsby"
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
+import ArticlePreview from "../components/article-preview" // 🔥 hinzufügen
 
 const IndexPage = ({ data }) => {
   const posts = data.allContentfulBlogPost.nodes
@@ -9,21 +10,7 @@ const IndexPage = ({ data }) => {
   return (
     <Layout>
       <h1>Blog</h1>
-      <ul>
-        {posts.map(post => (
-          <li key={post.slug}>
-            <h2>{post.title}</h2>
-            <p>{post.summary}</p>
-            <p>{post.Date}</p>
-            {post.headerImage && (
-              <GatsbyImage
-                image={getImage(post.headerImage)}
-                alt={post.title}
-              />
-            )}
-          </li>
-        ))}
-      </ul>
+      <ArticlePreview posts={posts} /> {/* ✅ verwenden */}
     </Layout>
   )
 }
