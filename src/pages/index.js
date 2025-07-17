@@ -32,7 +32,7 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query HomeQuery {
-    allContentfulBlogPost(sort: { date: DESC }) {
+    allContentfulBlogPost(sort: { Date: DESC }) {
       nodes {
         title
         slug
