@@ -25,7 +25,7 @@ const ArticlePreview = ({ posts }) => {
                 {post.description?.raw && renderRichText(post.description)}
               </div>
               <div className={styles.meta}>
-                <small className="meta">{post.publishDate}</small>
+                <small className="meta">{post.Date}</small>
                 <Tags tags={post.tags} />
               </div>
             </li>
