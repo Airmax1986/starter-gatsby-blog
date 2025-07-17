@@ -1,58 +1,49 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import get from 'lodash/get'
+import * as React from "react"
+import { graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import Layout from "../components/layout"
 
-import Layout from '../components/layout'
-import Hero from '../components/hero'
-import ArticlePreview from '../components/article-preview'
+const IndexPage = ({ data }) => {
+  const posts = data.allContentfulBlogPost.nodes
 
-class RootIndex extends React.Component {
-  render() {
-    const posts = get(this, 'props.data.allContentfulBlogPost.nodes')
-    const [author] = get(this, 'props.data.allContentfulPerson.nodes')
-
-    return (
-      <Layout location={this.props.location}>
-        <Hero
-          image={author.heroImage.gatsbyImage}
-          title={author.name}
-          content={author.shortBio?.raw}
-        />
-        <ArticlePreview posts={posts} />
-      </Layout>
-    )
-  }
+  return (
+    <Layout>
+      <h1>Blog</h1>
+      <ul>
+        {posts.map(post => (
+          <li key={post.slug}>
+            <h2>{post.title}</h2>
+            <p>{post.summary}</p>
+            <p>{post.date}</p>
+            {post.headerImage && (
+              <GatsbyImage
+                image={getImage(post.headerImage)}
+                alt={post.title}
+              />
+            )}
+          </li>
+        ))}
+      </ul>
+    </Layout>
+  )
 }
 
-export default RootIndex
+export default IndexPage
 
 export const pageQuery = graphql`
   query HomeQuery {
-    allContentfulBlogPost(sort: { fields: date, order: DESC }) {
+    allContentfulBlogPost(sort: { fields: [date], order: DESC }) {
       nodes {
         title
         slug
-        date(formatString: "MMMM Do, YYYY")
-        headerImage {
-          gatsbyImage(
-            layout: FULL_WIDTH
-            placeholder: BLURRED
-            width: 424
-            height: 212
-          )
-        }
         summary
-      }
-    }
-    allContentfulPerson {
-      nodes {
-        name
-        shortBio {
-          raw
+        date(formatString: "MMMM D, YYYY")
+        content
+        headerImage {
+          gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 800)
         }
-        title
-        heroImage: image {
-          gatsbyImage(layout: CONSTRAINED, placeholder: BLURRED, width: 1180)
+        author {
+          name
         }
       }
     }
