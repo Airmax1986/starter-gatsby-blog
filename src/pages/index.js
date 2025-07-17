@@ -32,13 +32,17 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query HomeQuery {
-    allContentfulBlogPost(sort: { fields: [date], order: DESC }) {
+    allContentfulBlogPost(sort: { date: DESC }) {
       nodes {
         title
         slug
         summary
         date(formatString: "MMMM D, YYYY")
-        content
+        content {
+          childMarkdownRemark {
+            excerpt
+          }
+        }
         headerImage {
           gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 800)
         }
@@ -48,4 +52,3 @@ export const pageQuery = graphql`
       }
     }
   }
-`
