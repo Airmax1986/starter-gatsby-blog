@@ -23,3 +23,5 @@ const BlogPostTemplate = ({ data }) => {
     </Layout>
   )
 }
+
+export default BlogPostTemplate
