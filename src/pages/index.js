@@ -14,7 +14,7 @@ const IndexPage = ({ data }) => {
           <li key={post.slug}>
             <h2>{post.title}</h2>
             <p>{post.summary}</p>
-            <p>{post.date}</p>
+            <p>{post.Date}</p>
             {post.headerImage && (
               <GatsbyImage
                 image={getImage(post.headerImage)}
@@ -37,7 +37,7 @@ export const pageQuery = graphql`
         title
         slug
         summary
-        date(formatString: "MMMM D, YYYY")
+        Date(formatString: "MMMM D, YYYY")
         headerImage {
           gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 800)
         }
