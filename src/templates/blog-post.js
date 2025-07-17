@@ -12,15 +12,12 @@ const BlogPostTemplate = ({ data }) => {
       <article>
         <h1>{post.title}</h1>
         <p><em>{post.date}</em> &nbsp;–&nbsp; von {post.author?.name}</p>
-
         {image && (
-          <GatsbyImage image={image} alt={post.title} style={{ marginBottom: "2rem" }} />
+          <GatsbyImage image={image} alt={post.title} style={{marginBottom: "2rem"}} />
         )}
-
         <p>{post.summary}</p>
-
-        <div style={{ marginTop: "2rem", lineHeight: "1.6" }}>
-          {post.content}
+        <div style={{marginTop: "2rem", lineHeight: "1.6"}}>
+          <div dangerouslySetInnerHTML={{ __html: post.content.childMarkdownRemark.html }} />
         </div>
       </article>
     </Layout>
@@ -35,7 +32,11 @@ export const pageQuery = graphql`
       title
       slug
       summary
-      content
+      content {
+        childMarkdownRemark {
+          html
+        }
+      }
       date(formatString: "MMMM D, YYYY")
       headerImage {
         gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 1000)
@@ -45,4 +46,3 @@ export const pageQuery = graphql`
       }
     }
   }
-`
