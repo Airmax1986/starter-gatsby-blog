@@ -2,6 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 
 const BlogPostTemplate = ({ data }) => {
   const post = data.contentfulBlogPost
@@ -9,14 +10,25 @@ const BlogPostTemplate = ({ data }) => {
 
   return (
     <Layout>
-      <article>
+      <article style={{ maxWidth: "720px", margin: "0 auto", padding: "2rem" }}>
         <h1>{post.title}</h1>
-        <p><em>{post.Date}</em> &nbsp;–&nbsp; von {post.author?.name}</p>
+        <p style={{ color: "#777", fontStyle: "italic" }}>
+          {post.Date} &nbsp;–&nbsp; von {post.author?.name}
+        </p>
+
         {image && (
-          <GatsbyImage image={image} alt={post.title} style={{ marginBottom: "2rem", borderRadius: "8px" }} />
+          <GatsbyImage
+            image={image}
+            alt={post.title}
+            style={{ margin: "2rem 0", borderRadius: "8px" }}
+          />
         )}
+
         <p>{post.summary}</p>
-        <div className="article-content" dangerouslySetInnerHTML={{ __html: post.content.content }} />
+
+        <section style={{ marginTop: "2rem", lineHeight: "1.7" }}>
+          {documentToReactComponents(post.content.json)}
+        </section>
       </article>
     </Layout>
   )
@@ -31,7 +43,7 @@ export const pageQuery = graphql`
       slug
       summary
       content {
-        content
+        json
       }
       Date(formatString: "MMMM D, YYYY")
       headerImage {
