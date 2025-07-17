@@ -11,7 +11,7 @@ const BlogPostTemplate = ({ data }) => {
     <Layout>
       <article>
         <h1>{post.title}</h1>
-        <p><em>{post.date}</em> &nbsp;–&nbsp; von {post.author?.name}</p>
+        <p><em>{post.Date}</em> &nbsp;–&nbsp; von {post.author?.name}</p>
         {image && (
           <GatsbyImage image={image} alt={post.title} style={{marginBottom: "2rem"}} />
         )}
@@ -35,7 +35,7 @@ export const pageQuery = graphql`
       content {
         content
       }
-      date(formatString: "MMMM D, YYYY")
+      Date(formatString: "MMMM D, YYYY")
       headerImage {
         gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 1000)
       }
